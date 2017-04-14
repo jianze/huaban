@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=devie-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+  	<meta name='renderer' content='webkit'/>
+  	<meta http-equiv='X-UA-Compatible' content='IE=Edge'/>
+	<title>Document</title>
+</head>
+<link rel="stylesheet" href="tubiao/iconfont.css">
+<style>
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+}
+canvas{
+	border:1px solid red;
+}
+ul{
+	width: 1200px;
+	height: 50px;
+	margin: 0 auto;
+	/*margin-bottom: 10px;*/
+	overflow: hidden;
+	-moz-user-select:none;/*火狐*/
+	-webkit-user-select:none;/*webkit浏览器*/
+	-ms-user-select:none;/*IE10*/
+	-khtml-user-select:none;/*早期浏览器*/
+	user-select:none;
+}
+li{
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	border:1px solid #000;
+	border-right: 0;
+	cursor: pointer;
+}
+.ssr{
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	border:1px solid #000;
+	border-right: 0;
+	cursor: pointer;
+	margin-left: 5px;
+}
+.sr{
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	border:1px solid #000;
+	border-right: 0;
+	cursor: pointer;
+	border-right: 0;
+	margin-left: 5px;
+}
+.tubiao{
+	width: 40px;
+	height: 100%;
+	font-size: 20px !important;
+	float: left;
+}
+.bianse{
+	color: red;
+}
+.bian,.jiao{
+	width: 40px;
+	font-size: 20px;
+	height: 40px;
+	float: left;
+}
+.bian,.jiao{
+	border: 1px solid #000; 
+}
+.bian input,.jiao input{
+	width: 38px;
+	height: 36px;
+	border: 0;
+}
+.shisheqi,.miaoshishe{
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	border-right: 0;
+	cursor: pointer;
+	border: 1px solid #000;
+}
+.shisheqi input,.miaoshishe input{
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+textarea{
+	width: 200px;
+	height: 40px;
+	border: 1px dashed #ccc;
+	position: absolute;
+	z-index: 10;
+	text-align: left;
+}
+</style>
+<body>
+<ul>
+	<li><div class="iconfont tubiao">&#xe618;</div></li>
+	<li><div class="iconfont tubiao">&#xe60a;</div></li>
+	<li class="bianse"><div class="iconfont tubiao">&#xe628;</div></li>
+	<li><div class="iconfont tubiao">&#xe604;</div></li>
+	<li><div class="iconfont tubiao">&#xe75c;</div></li>
+	<li><div class="iconfont tubiao">&#xe705;</div></li>
+	<li style="width:82px;"><div class="iconfont tubiao">&#xe663;</div><div class="bian"><input class="bians" type="number"></div></li>
+	<li style="width:82px;"><div class="iconfont tubiao">&#xe623;</div><div class="jiao"><input class="jiaos" type="number"></div></li>
+	<li><div class="iconfont tubiao">&#xe614;</div></li>
+	<li style="border-right: 1px solid #000;"><div class="iconfont tubiao">&#xe610;</div></li>
+	<div class="ssr"><div class="iconfont tubiao">&#xe679;</div></div>
+	<div class="shisheqi"><input type="color"></div>
+	<div class="sr bianse"><div class="iconfont tubiao">&#xe63c;</div></div>
+	<div class="miaoshishe"><input type="color"></div>
+</ul>
+<!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
+<!-- <canvas></canvas> -->
+</body>
+<script type="text/javascript" src="huaban.js"></script>
+<script type="text/javascript">
+var body=document.querySelector('body');
+var lis=document.querySelectorAll('li');
+var win=window.innerWidth;
+lis[0].onclick=function(){
+	if(document.querySelectorAll('canvas').length<1){
+		a=document.createElement('canvas');
+	}else{
+		return;
+	}
+	body.appendChild(a);
+	o=a.getContext('2d');
+	a.width=win-2;
+	a.height=500;
+	aa=new huaban(a,o);
+	aa.tongyong();
+}
+// var a=document.querySelector("canvas");
+// var o=a.getContext('2d');
+// a.width=1200;
+// a.height=500;
+// var aa=new huaban(a,o);
+// aa.tongyong();
+var jilu=0;
+for(var i=2;i<lis.length;i++){
+	lis[i].f=i;
+	lis[i].onclick=function(){
+		lis[jilu].classList.remove("bianse");
+		lis[2].classList.remove("bianse");
+		lis[this.f].classList.add("bianse");
+		jilu=this.f;
+	}
+}
+var ssr=document.querySelector(".ssr");
+var sr=document.querySelector(".sr");
+var kg=true;
+ssr.onclick=function(){
+	if(kg){
+		ssr.classList.add("bianse");
+		aa.tstyle=true;
+		kg=false;
+	}else{
+		kg=true;
+		ssr.classList.remove("bianse");
+		aa.tstyle=false;
+	}
+	// sr.classList.remove("bianse");
+}
+var kg1=true;
+sr.onclick=function(){
+	if(!kg1){
+		sr.classList.add("bianse");
+		aa.style=true;
+		kg1=true;
+	}else{
+		kg1=false;
+		sr.classList.remove("bianse");
+		aa.style=false;
+	}
+	// ssr.classList.remove("bianse");
+}
+var shishe=document.querySelector('.shisheqi input');
+shishe.onchange=function(){
+	var yanse=shishe.value;
+	aa.huoqu=yanse;
+}
+var miaoshishe=document.querySelector('.miaoshishe input');
+miaoshishe.onchange=function(){
+	var miaose=miaoshishe.value;
+	aa.miaohuoqu=miaose;
+}
+var liss=document.querySelectorAll('.tubiao');
+liss[1].onclick=function(){
+	aa.baocun.pop();
+	if(aa.baocun.length==0){
+		aa.o.clearRect(0,0,a.width,a.height);
+	}else{
+		aa.o.putImageData(aa.baocun[aa.baocun.length-1],0,0,0,0,a.width,a.height);
+	}
+}
+liss[2].onclick=function(){
+	aa.type='huabi';
+}
+liss[3].onclick=function(){
+	aa.type='zhixian';
+}
+liss[4].onclick=function(){
+	aa.type='yuan';
+}
+liss[5].onclick=function(){
+	aa.type='sanjiao';
+}
+liss[6].onclick=function(){
+	aa.type='duobian';
+}
+liss[7].onclick=function(){
+	aa.type='wujiao';
+}
+liss[8].onclick=function(){
+	aa.type='wenzi';
+}
+liss[9].onclick=function(){
+	aa.type='juxing';
+}
+// liss[10].onclick=function(){
+// 	aa.style='fill';
+// }
+// liss[11].onclick=function(){
+// 	aa.style='stroke';
+// }
+var inputs=document.querySelector('.bians');
+inputs.onblur=function(){
+	var newv=inputs.value.trim();
+	aa.bian=newv;
+	aa.type='duobian';
+}
+var inputss=document.querySelector('.jiaos');
+inputss.onblur=function(){
+	var newv=inputss.value.trim();
+	aa.jiaoshu=newv;
+	aa.type='wujiao';
+}
+</script>
+</html>
